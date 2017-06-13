@@ -15,6 +15,7 @@ var PetListView = Backbone.View.extend({
 
     this.listenTo(this.model, 'add', this.addPet);
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'remove', this.removePet);
 
     this.input = {
       name: this.$('.add-pet-form input[name="name"]'),
@@ -67,7 +68,17 @@ var PetListView = Backbone.View.extend({
     this.input.name.val('');
     this.input.age.val('');
     this.input.breed.val('');
-  }
+  },
+
+  removePet: function(pet) {
+    var filteredList = [];
+    this.petViews.forEach(function(card) {
+      if (card.model != pet) {
+        filteredList.push(card);
+      }
+    });
+    this.petViews = filteredList;
+  },
 });
 
 export default PetListView;

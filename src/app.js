@@ -8,12 +8,12 @@ $(document).ready(function() {
   petList.fetch();
 
   $('main').on('click', function(event) {
-    if ($("#pet").is(':hidden')) {
-      console.log("pet is hidden");
-    } else {
-      console.log("pet is visible");
-      $("#pet").hide();
-    }
+    // if ($("#pet").is(':hidden')) {
+    //   console.log("pet is hidden");
+    // } else {
+    //   console.log("pet is visible");
+    //   $("#pet").hide();
+    // }
   });
 
   var petListView = new PetListView({
@@ -22,11 +22,6 @@ $(document).ready(function() {
     template: _.template($("#pet-card-template").html()),
     infoTemplate: _.template($("#pet-info-template").html()),
   });
-
-  // $('.btn-save').on('click', function(event) {
-  //   event.preventDefault();
-  //   petListView.createPet();
-  // });
 
   petListView.render();
 });
