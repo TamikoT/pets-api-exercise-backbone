@@ -1,15 +1,13 @@
 import $ from 'jquery';
-import _ from 'underscore';
-
 import Backbone from 'backbone';
 import PetView from './pet_view';
 
 var PetListView = Backbone.View.extend({
-  initialize: function(options) {
-    this.template = options.template;
-    this.petInfoTemplate = options.petInfoTemplate;
+  initialize: function(params) {
+    this.template = params.template;
+    this.infoTemplate = params.infoTemplate;
     this.petListElement = this.$('#pet-list');
-    this.petArray = [];
+    this.petViews = [];
 
     this.model.forEach(function(rawPet) {
       this.addPet(rawPet);
@@ -21,13 +19,14 @@ var PetListView = Backbone.View.extend({
 
   render: function() {
     this.petListElement.empty();
-    console.log("inside petList render");
+    console.log(">>> from petList render");
 
-    this.petArray.forEach(function(card) {
+    this.petViews.forEach(function(card) {
       console.log(card);
       card.render();
       this.petListElement.append(card.$el);
     }, this);
+
     return this;
   },
 
@@ -35,11 +34,11 @@ var PetListView = Backbone.View.extend({
     var petCard = new PetView({
       model: pet,
       template: this.template,
-      petInfoTemplate: this.petInfoTemplate,
+      infoTemplate: this.infoTemplate,
     });
-    // this.listenTo(petCard, 'edit', )
+
     console.log(petCard);
-    this.petArray.push(petCard);
+    this.petViews.push(petCard);
   },
 });
 

@@ -14,14 +14,14 @@
     </header>
     <main id="application">
       <section id='pet'></section>
-      <section id='pet-list'></section>
+      <ul id='pet-list'></ul>
       <section id='new-pet'></section>
     </main>
 
     <!-- Templates -->
 
     <script id="pet-card-template" type="text/template">
-      <li><%- pet.name %></li>
+      <li class="pet-name"><%- pet.name %></li>
     </script>
 
     <script id="pet-info-template" type="text/template">
