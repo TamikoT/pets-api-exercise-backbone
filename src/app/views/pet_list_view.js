@@ -9,12 +9,18 @@ var PetListView = Backbone.View.extend({
     this.petListElement = this.$('#pet-list');
     this.petViews = [];
 
-    this.model.forEach(function(rawPet) {
-      this.addPet(rawPet);
+    this.model.forEach(function(petData) {
+      this.addPet(petData);
     }, this); // bind `this` so it's available inside forEach
 
     this.listenTo(this.model, 'add', this.addPet);
     this.listenTo(this.model, 'update', this.render);
+
+    this.input = {
+      name: this.$('.add-pet-form input[name="name"]'),
+      age: this.$('.add-pet-form input[name="age"]'),
+      breed: this.$('.add-pet-form input[name="breed"]'),
+    };
   },
 
   render: function() {
@@ -22,12 +28,15 @@ var PetListView = Backbone.View.extend({
     console.log(">>> from petList render");
 
     this.petViews.forEach(function(card) {
-      console.log(card);
       card.render();
       this.petListElement.append(card.$el);
     }, this);
 
     return this;
+  },
+
+  events: {
+    'click .btn-add': 'createPet',
   },
 
   addPet: function(pet) {
@@ -40,6 +49,25 @@ var PetListView = Backbone.View.extend({
     console.log(petCard);
     this.petViews.push(petCard);
   },
+
+  createPet: function(event) {
+    event.preventDefault();
+    var userPet = {
+      name: this.input.name.val(),
+      age: this.input.age.val(),
+      breed: this.input.breed.val(),
+    };
+
+    // add a pet to the collection
+    this.model.add(userPet);
+    this.model.create(userPet);
+    console.log("pet added!");
+
+    // clear the input form
+    this.input.name.val('');
+    this.input.age.val('');
+    this.input.breed.val('');
+  }
 });
 
 export default PetListView;
